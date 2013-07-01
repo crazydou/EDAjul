@@ -60,7 +60,35 @@ test:process
 	V<="1000";
 	wait for ClockPeriod*15;
 	V<="0000";
+	wait for ClockPeriod*30;             --Longtime one key	
+	
+	V<="1000";
 	wait for ClockPeriod*15;
+	V<="0000";
+	wait for ClockPeriod*15;
+	V<="1000";
+	wait for ClockPeriod*15;
+	V<="0000";
+	wait for ClockPeriod*30;	         --Double Click one key
+	
+	
+	V<="0011";
+	wait for ClockPeriod*12;
+	V<="0000";
+	wait for ClockPeriod*1;
+	V<="0011";
+	wait for ClockPeriod*2;
+	V<="0000";
+	wait for ClockPeriod*30;              --Simulate Trimble
+	
+	
+	V<="0011";
+	wait for ClockPeriod*15;
+	V<="0000";
+	wait for ClockPeriod*15;
+	V<="0110";
+	wait for ClockPeriod*15;
+	V<="0000";                             --One click Two key
   end process;
   
   
