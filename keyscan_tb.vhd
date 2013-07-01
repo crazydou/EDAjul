@@ -15,15 +15,15 @@ architecture tb of keyscan_tb is
   component keyboard_ev
     port(
       CLK  : in  std_logic;
-    C  : in  std_logic_vector(3 downto 0);--supporting that there is only one signal
+    V  : in  std_logic_vector(3 downto 0);--supporting that there is only one signal
     O  : out std_logic_vector(3 downto 0);--give the transformation of the matrix keyboard in binary
-	D,erro : out std_logic;--inform the state of the curiut
-    Q  : out std_logic_vector(3 downto 0)--to scan the keyboard
+	D  : out std_logic;--inform the state of the curiut
+    H  : out std_logic_vector(3 downto 0)--to scan the keyboard
     );
   end component;
 --测试用的信号和参数  
   
-  signal C,O,Q:std_logic_vector(3 downto 0);
+  signal V,O,H:std_logic_vector(3 downto 0);
   signal CLK,D,erro:std_logic;
   constant ClockPeriod:time:=2 ns;
 --验证用的相关说明，将被测信息打印出来，可以去掉，直接观察波形！  
@@ -31,7 +31,7 @@ architecture tb of keyscan_tb is
 begin
 
 
-  c_divider:keyboard_ev port map (clk=>clk,C=>C,O=>O,D=>D,erro=>erro,Q=>Q);
+  c_divider:keyboard_ev port map (clk=>clk,V=>V,O=>O,D=>D,H=>H);
   
   p_clk:process
   begin
@@ -45,21 +45,21 @@ begin
 
 test:process
   begin
-    C<="0001";
+    V<="0001";
 	wait for ClockPeriod*15;
-	C<="0000";
+	V<="0000";
 	wait for ClockPeriod*15;
-	C<="0010";
+	V<="0010";
 	wait for ClockPeriod*15;
-	C<="0000";
+	V<="0000";
 	wait for ClockPeriod*15;
-	C<="0100";
+	V<="0100";
 	wait for ClockPeriod*15;
-	C<="0000";
+	V<="0000";
 	wait for ClockPeriod*15;
-	C<="1000";
+	V<="1000";
 	wait for ClockPeriod*15;
-	C<="0000";
+	V<="0000";
 	wait for ClockPeriod*15;
   end process;
   
