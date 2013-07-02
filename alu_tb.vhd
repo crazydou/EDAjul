@@ -45,7 +45,7 @@ begin
 
 test:process
   begin
-    CS<="000";data_a<="11111110";data_b<="00000001";carry_in<='1';
+    CS<="000";data_a<="11111110";data_b<="00000101";carry_in<='1';
 	wait for ClockPeriod*50;
 	
 	CS<="000";data_a<="11111111";data_b<="11111111";carry_in<='1';
