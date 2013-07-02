@@ -1,77 +1,77 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.std_logic_unsigned.all;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity keyboard_ev is
-port(
-  CLK  : in  std_logic;
-    V  : in  std_logic_vector(3 downto 0);--supporting that there is only one signal
-    O  : out std_logic_vector(3 downto 0);--give the transformation of the matrix keyboard in binary
-	D  : out std_logic;--inform the state 
-    H  : out std_logic_vector(3 downto 0)--to scan the keyboard
+ENTITY KEYBOARD_EV IS
+PORT(
+  CLK  : IN  STD_LOGIC;
+    V  : IN  STD_LOGIC_VECTOR(3 DOWNTO 0);--SUPPORTING THAT THERE IS ONLY ONE SIGNAL
+    O  : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);--GIVE THE TRANSFORMATION OF THE MATRIX KEYBOARD IN BINARY
+	D  : OUT STD_LOGIC;--INFORM THE STATE 
+    H  : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)--TO SCAN THE KEYBOARD
     );
-end entity keyboard_ev;
-architecture behavr of keyboard_ev is
-type state_type is (s1,s2,s3,s4);
-signal state:state_type;
-begin
-p1: process(CLK,V)
-begin
-if V=0 then
-   if (CLK'event and CLK='1') then
-          case state is
-          when s1=> state<=s2;
-          when s2=> state<=s3;
-          when s3=> state<=s4;  
-          when s4=> state<=s1; 
-          end case;
-   end if;
-end if;
-end process;
-p2: process(state)
-begin
-case state is
-when s1=> H<="1000";
-when s2=> H<="0100";
-when s3=> H<="0010";  
-when s4=> H<="0001"; 
-end case;
-end process;
-p3: process(V)
-variable P : std_logic_vector(3 downto 0);
-begin
-if V>0 then
-   if V="1000" then
-      case state is
-      when s1=> P :="0001";D<='1';
-      when s2=> P :="0010";D<='1';
-      when s3=> P :="0011";D<='1';
-      when s4=> P :="0100";D<='1';
-      end case;
-   elsif V="0100" then
-      case state is
-      when s1=> P :="0101";D<='1';
-      when s2=> P :="0110";D<='1';
-      when s3=> P :="0111";D<='1';
-      when s4=> P :="1000";D<='1';
-      end case;
-   elsif V="0010" then
-      case state is
-      when s1=> P :="1001";D<='1';
-      when s2=> P :="1010";D<='1';
-      when s3=> P :="1011";D<='1';
-      when s4=> P :="1100";D<='1';
-	  end case;
-   elsif V="0001" then
-	  case state is
-	  when s1=> P :="0000";D<='1';
-	  when s2=> P :="1101";D<='1';
-	  when s3=> P :="1110";D<='1';
-	  when s4=> P :="0000";D<='0';
-	  end case; 
-   end if;
-   else P:="0000";D<='0';
-end if;
+END ENTITY KEYBOARD_EV;
+ARCHITECTURE BEHAVR OF KEYBOARD_EV IS
+TYPE STATE_TYPE IS (S1,S2,S3,S4);
+SIGNAL STATE:STATE_TYPE;
+BEGIN
+P1: PROCESS(CLK,V)
+BEGIN
+IF V=0 THEN
+   IF (CLK'EVENT AND CLK='1') THEN
+          CASE STATE IS
+          WHEN S1=> STATE<=S2;
+          WHEN S2=> STATE<=S3;
+          WHEN S3=> STATE<=S4;  
+          WHEN S4=> STATE<=S1; 
+          END CASE;
+   END IF;
+END IF;
+END PROCESS;
+P2: PROCESS(STATE)
+BEGIN
+CASE STATE IS
+WHEN S1=> H<="1000";
+WHEN S2=> H<="0100";
+WHEN S3=> H<="0010";  
+WHEN S4=> H<="0001"; 
+END CASE;
+END PROCESS;
+P3: PROCESS(V)
+VARIABLE P : STD_LOGIC_VECTOR(3 DOWNTO 0);
+BEGIN
+IF V>0 THEN
+   IF V="1000" THEN
+      CASE STATE IS
+      WHEN S1=> P :="0001";D<='1';
+      WHEN S2=> P :="0010";D<='1';
+      WHEN S3=> P :="0011";D<='1';
+      WHEN S4=> P :="0100";D<='1';
+      END CASE;
+   ELSIF V="0100" THEN
+      CASE STATE IS
+      WHEN S1=> P :="0101";D<='1';
+      WHEN S2=> P :="0110";D<='1';
+      WHEN S3=> P :="0111";D<='1';
+      WHEN S4=> P :="1000";D<='1';
+      END CASE;
+   ELSIF V="0010" THEN
+      CASE STATE IS
+      WHEN S1=> P :="1001";D<='1';
+      WHEN S2=> P :="1010";D<='1';
+      WHEN S3=> P :="1011";D<='1';
+      WHEN S4=> P :="1100";D<='1';
+	  END CASE;
+   ELSIF V="0001" THEN
+	  CASE STATE IS
+	  WHEN S1=> P :="0000";D<='1';
+	  WHEN S2=> P :="1101";D<='1';
+	  WHEN S3=> P :="1110";D<='1';
+	  WHEN S4=> P :="0000";D<='0';
+	  END CASE; 
+   END IF;
+   ELSE P:="0000";D<='0';
+END IF;
 O<=P;
-end process;
-end behavr;
+END PROCESS;
+END BEHAVR;
